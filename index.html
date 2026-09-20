@@ -1,116 +1,995 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Student Skill Tracker</title>
 
     <link rel="stylesheet" href="style.css">
+
 </head>
+
 
 <body>
 
-    <div class="container">
+    <!-- ================= NAVBAR ================= -->
 
-        <h1>Student Skill Tracker</h1>
+    <nav class="navbar">
 
-        <p class="subtitle">
-            Track your Computer Engineering skills and learning progress.
-        </p>
-<h2>My Skills</h2>
-
-<div class="add-skill">
-
-    <input type="text" id="skillName" placeholder="Enter skill name">
-
-    <input type="number" id="skillProgress" placeholder="Progress %" min="0" max="100">
-
-    <button onclick="addSkill()">+ Add Skill</button>
-
-</div>
-
-
-<div id="skillsList">
-
-    <!-- C Programming -->
-    <div class="skill-card">
-
-        <div class="skill-header">
-            <span>C Programming</span>
-            <span>80%</span>
+        <div class="logo">
+            <span class="logo-icon">✦</span>
+            SkillTrack
         </div>
 
-        <div class="progress-bar">
-            <div class="progress" style="width: 80%;"></div>
+        <div class="nav-actions">
+
+            <button
+                id="themeButton"
+                class="theme-button"
+                onclick="toggleDarkMode()"
+            >
+                🌙
+            </button>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="container">
+
+
+        <!-- ================= HERO ================= -->
+
+        <section class="hero">
+
+            <p class="small-title">
+                COMPUTER ENGINEERING • PERSONAL DASHBOARD
+            </p>
+
+            <h1>
+                Student Skill
+                <span>Tracker</span>
+            </h1>
+
+            <p class="subtitle">
+                Track your technical skills, build your profile,
+                monitor your progress and grow consistently.
+            </p>
+
+        </section>
+
+
+
+        <!-- ================= PROFILE ================= -->
+
+        <section class="profile-card">
+
+            <div class="profile-top">
+
+                <div class="profile-avatar" id="profileAvatar">
+                    U
+                </div>
+
+                <div class="profile-info">
+
+                    <p class="section-label">
+                        STUDENT PROFILE
+                    </p>
+
+                    <h2 id="profileName">
+                        Your Name
+                    </h2>
+
+                    <p id="profileEducation">
+                        Computer Engineering • 2nd Year
+                    </p>
+
+                </div>
+
+                <button
+                    class="edit-profile-button"
+                    onclick="openProfileModal()"
+                >
+                    ✏ Edit Profile
+                </button>
+
+            </div>
+
+
+            <div class="profile-details">
+
+                <div>
+                    <span>🎓 College</span>
+                    <strong id="profileCollege">Not added</strong>
+                </div>
+
+                <div>
+                    <span>📚 Semester</span>
+                    <strong id="profileSemester">Not added</strong>
+                </div>
+
+                <div>
+                    <span>📧 Email</span>
+                    <strong id="profileEmail">Not added</strong>
+                </div>
+
+                <div>
+                    <span>🎯 Career Goal</span>
+                    <strong id="profileGoal">Not added</strong>
+                </div>
+
+            </div>
+
+
+            <div class="profile-links">
+
+                <a
+                    id="githubLink"
+                    href="#"
+                    target="_blank"
+                >
+                    GitHub
+                </a>
+
+                <a
+                    id="linkedinLink"
+                    href="#"
+                    target="_blank"
+                >
+                    LinkedIn
+                </a>
+
+            </div>
+
+
+            <p
+                id="profileBio"
+                class="profile-bio"
+            >
+                Add a short bio about yourself.
+            </p>
+
+        </section>
+
+
+
+        <!-- ================= SUMMARY ================= -->
+
+        <section class="summary-grid">
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    📚
+                </div>
+
+                <div>
+
+                    <p>Total Skills</p>
+
+                    <h2 id="totalSkills">
+                        0
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    📊
+                </div>
+
+                <div>
+
+                    <p>Overall Progress</p>
+
+                    <h2 id="overallProgress">
+                        0%
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    🏆
+                </div>
+
+                <div>
+
+                    <p>Achievements</p>
+
+                    <h2 id="achievementCount">
+                        0
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= OVERALL PROGRESS ================= -->
+
+        <section class="progress-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <p class="section-label">
+                        YOUR JOURNEY
+                    </p>
+
+                    <h2>
+                        Overall Progress
+                    </h2>
+
+                </div>
+
+                <strong id="overallText">
+                    0%
+                </strong>
+
+            </div>
+
+
+            <div class="overall-progress-bar">
+
+                <div id="overallProgressBar"></div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= ADD SKILL ================= -->
+
+        <section class="add-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <p class="section-label">
+                        BUILD YOUR PROFILE
+                    </p>
+
+                    <h2>
+                        Add a Skill
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+
+                <div class="input-group">
+
+                    <label for="skillName">
+                        Skill Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="skillName"
+                        placeholder="e.g. JavaScript"
+                    >
+
+                </div>
+
+
+
+                <div class="input-group">
+
+                    <label for="skillCategory">
+                        Category
+                    </label>
+
+                    <select id="skillCategory">
+
+                        <option value="Programming">
+                            Programming
+                        </option>
+
+                        <option value="Web Development">
+                            Web Development
+                        </option>
+
+                        <option value="Database">
+                            Database
+                        </option>
+
+                        <option value="AI / Machine Learning">
+                            AI / Machine Learning
+                        </option>
+
+                        <option value="Data Science">
+                            Data Science
+                        </option>
+
+                        <option value="Cybersecurity">
+                            Cybersecurity
+                        </option>
+
+                        <option value="Cloud Computing">
+                            Cloud Computing
+                        </option>
+
+                        <option value="App Development">
+                            App Development
+                        </option>
+
+                        <option value="UI/UX">
+                            UI/UX
+                        </option>
+
+                        <option value="Tools & Version Control">
+                            Tools & Version Control
+                        </option>
+
+                        <option value="Communication">
+                            Communication
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <div class="input-group">
+
+                    <label for="skillProgress">
+                        Progress
+                    </label>
+
+                    <input
+                        type="number"
+                        id="skillProgress"
+                        placeholder="0 - 100"
+                        min="0"
+                        max="100"
+                    >
+
+                </div>
+
+
+
+                <div class="input-group button-group">
+
+                    <button
+                        class="add-button"
+                        onclick="addSkill()"
+                    >
+                        + Add Skill
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= SEARCH ================= -->
+
+        <section class="tools-section">
+
+            <div class="search-box">
+
+                <span>
+                    🔍
+                </span>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search skills..."
+                    oninput="displaySkills()"
+                >
+
+            </div>
+
+
+
+            <select
+                id="categoryFilter"
+                onchange="displaySkills()"
+            >
+
+                <option value="All">
+                    All Categories
+                </option>
+
+                <option value="Programming">
+                    Programming
+                </option>
+
+                <option value="Web Development">
+                    Web Development
+                </option>
+
+                <option value="Database">
+                    Database
+                </option>
+
+                <option value="AI / Machine Learning">
+                    AI / Machine Learning
+                </option>
+
+                <option value="Data Science">
+                    Data Science
+                </option>
+
+                <option value="Cybersecurity">
+                    Cybersecurity
+                </option>
+
+                <option value="Cloud Computing">
+                    Cloud Computing
+                </option>
+
+                <option value="App Development">
+                    App Development
+                </option>
+
+                <option value="UI/UX">
+                    UI/UX
+                </option>
+
+                <option value="Tools & Version Control">
+                    Tools & Version Control
+                </option>
+
+                <option value="Communication">
+                    Communication
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+            </select>
+
+
+
+            <select
+                id="levelFilter"
+                onchange="displaySkills()"
+            >
+
+                <option value="All">
+                    All Levels
+                </option>
+
+                <option value="Beginner">
+                    Beginner
+                </option>
+
+                <option value="Elementary">
+                    Elementary
+                </option>
+
+                <option value="Intermediate">
+                    Intermediate
+                </option>
+
+                <option value="Upper Intermediate">
+                    Upper Intermediate
+                </option>
+
+                <option value="Advanced">
+                    Advanced
+                </option>
+
+                <option value="Expert">
+                    Expert
+                </option>
+
+            </select>
+
+        </section>
+
+
+
+        <!-- ================= SKILLS ================= -->
+
+        <section>
+
+            <div class="section-heading skill-heading">
+
+                <div>
+
+                    <p class="section-label">
+                        YOUR TECHNICAL SKILLS
+                    </p>
+
+                    <h2>
+                        My Skills
+                    </h2>
+
+                </div>
+
+                <span id="skillCountText">
+                    0 skills
+                </span>
+
+            </div>
+
+
+            <div
+                id="skillsList"
+                class="skills-list"
+            ></div>
+
+        </section>
+
+
+
+        <!-- ================= ACHIEVEMENTS ================= -->
+
+        <section class="achievements-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <p class="section-label">
+                        MILESTONES
+                    </p>
+
+                    <h2>
+                        Achievements
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="achievementsList"
+                class="achievement-grid"
+            ></div>
+
+        </section>
+
+
+
+        <!-- ================= FOOTER ================= -->
+
+        <footer>
+
+            <p>
+                Built with HTML • CSS • JavaScript
+            </p>
+
+            <p>
+                Student Skill Tracker © 2026
+            </p>
+
+        </footer>
+
+    </main>
+
+
+
+    <!-- ================= PROFILE MODAL ================= -->
+
+    <div
+        id="profileModal"
+        class="modal"
+    >
+
+        <div class="modal-content large-modal">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <p class="section-label">
+                        PERSONAL INFORMATION
+                    </p>
+
+                    <h2>
+                        Edit Profile
+                    </h2>
+
+                </div>
+
+                <button
+                    class="close-button"
+                    onclick="closeProfileModal()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+
+            <div class="modal-form-grid">
+
+
+                <div>
+
+                    <label>
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="profileNameInput"
+                        placeholder="Your full name"
+                    >
+
+                </div>
+
+
+
+                <div>
+
+                    <label>
+                        College
+                    </label>
+
+                    <input
+                        type="text"
+                        id="profileCollegeInput"
+                        placeholder="College name"
+                    >
+
+                </div>
+
+
+
+                <div>
+
+                    <label>
+                        Branch / Department
+                    </label>
+
+                    <input
+                        type="text"
+                        id="profileBranchInput"
+                        placeholder="Computer Engineering"
+                    >
+
+                </div>
+
+
+
+                <div>
+
+                    <label>
+                        Year
+                    </label>
+
+                    <select id="profileYearInput">
+
+                        <option value="1st Year">
+                            1st Year
+                        </option>
+
+                        <option value="2nd Year">
+                            2nd Year
+                        </option>
+
+                        <option value="3rd Year">
+                            3rd Year
+                        </option>
+
+                        <option value="4th Year">
+                            4th Year
+                        </option>
+
+                        <option value="Graduate">
+                            Graduate
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <div>
+
+                    <label>
+                        Semester
+                    </label>
+
+                    <select id="profileSemesterInput">
+
+                        <option value="1st Semester">
+                            1st Semester
+                        </option>
+
+                        <option value="2nd Semester">
+                            2nd Semester
+                        </option>
+
+                        <option value="3rd Semester">
+                            3rd Semester
+                        </option>
+
+                        <option value="4th Semester">
+                            4th Semester
+                        </option>
+
+                        <option value="5th Semester">
+                            5th Semester
+                        </option>
+
+                        <option value="6th Semester">
+                            6th Semester
+                        </option>
+
+                        <option value="7th Semester">
+                            7th Semester
+                        </option>
+
+                        <option value="8th Semester">
+                            8th Semester
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <div>
+
+                    <label>
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="profileEmailInput"
+                        placeholder="you@example.com"
+                    >
+
+                </div>
+
+
+
+                <div>
+
+                    <label>
+                        GitHub URL
+                    </label>
+
+                    <input
+                        type="url"
+                        id="githubInput"
+                        placeholder="https://github.com/username"
+                    >
+
+                </div>
+
+
+
+                <div>
+
+                    <label>
+                        LinkedIn URL
+                    </label>
+
+                    <input
+                        type="url"
+                        id="linkedinInput"
+                        placeholder="https://linkedin.com/in/username"
+                    >
+
+                </div>
+
+
+
+                <div class="full-width">
+
+                    <label>
+                        Career Goal
+                    </label>
+
+                    <input
+                        type="text"
+                        id="profileGoalInput"
+                        placeholder="e.g. Software Developer / AI Engineer"
+                    >
+
+                </div>
+
+
+
+                <div class="full-width">
+
+                    <label>
+                        Short Bio
+                    </label>
+
+                    <textarea
+                        id="profileBioInput"
+                        placeholder="Write a short introduction about yourself..."
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+
+
+            <button
+                class="save-button"
+                onclick="saveProfile()"
+            >
+                Save Profile
+            </button>
+
         </div>
 
     </div>
 
 
-    <!-- C++ -->
-    <div class="skill-card">
 
-        <div class="skill-header">
-            <span>C++</span>
-            <span>70%</span>
-        </div>
+    <!-- ================= EDIT SKILL MODAL ================= -->
 
-        <div class="progress-bar">
-            <div class="progress" style="width: 70%;"></div>
+    <div
+        id="editModal"
+        class="modal"
+    >
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <p class="section-label">
+                        SKILL MANAGEMENT
+                    </p>
+
+                    <h2>
+                        Edit Skill
+                    </h2>
+
+                </div>
+
+                <button
+                    class="close-button"
+                    onclick="closeEditModal()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+
+            <label>
+                Skill Name
+            </label>
+
+            <input
+                type="text"
+                id="editSkillName"
+            >
+
+
+
+            <label>
+                Category
+            </label>
+
+            <select id="editSkillCategory">
+
+                <option value="Programming">
+                    Programming
+                </option>
+
+                <option value="Web Development">
+                    Web Development
+                </option>
+
+                <option value="Database">
+                    Database
+                </option>
+
+                <option value="AI / Machine Learning">
+                    AI / Machine Learning
+                </option>
+
+                <option value="Data Science">
+                    Data Science
+                </option>
+
+                <option value="Cybersecurity">
+                    Cybersecurity
+                </option>
+
+                <option value="Cloud Computing">
+                    Cloud Computing
+                </option>
+
+                <option value="App Development">
+                    App Development
+                </option>
+
+                <option value="UI/UX">
+                    UI/UX
+                </option>
+
+                <option value="Tools & Version Control">
+                    Tools & Version Control
+                </option>
+
+                <option value="Communication">
+                    Communication
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+            </select>
+
+
+
+            <label>
+                Progress
+            </label>
+
+            <input
+                type="number"
+                id="editSkillProgress"
+                min="0"
+                max="100"
+            >
+
+
+
+            <button
+                class="save-button"
+                onclick="saveEditedSkill()"
+            >
+                Save Changes
+            </button>
+
         </div>
 
     </div>
 
 
-    <!-- Python -->
-    <div class="skill-card">
 
-        <div class="skill-header">
-            <span>Python</span>
-            <span>50%</span>
-        </div>
-
-        <div class="progress-bar">
-            <div class="progress" style="width: 50%;"></div>
-        </div>
-
-    </div>
-
-
-    <!-- HTML & CSS -->
-    <div class="skill-card">
-
-        <div class="skill-header">
-            <span>HTML & CSS</span>
-            <span>80%</span>
-        </div>
-
-        <div class="progress-bar">
-            <div class="progress" style="width: 80%;"></div>
-        </div>
-
-    </div>
-
-
-    <!-- Git & GitHub -->
-    <div class="skill-card">
-
-        <div class="skill-header">
-            <span>Git & GitHub</span>
-            <span>30%</span>
-        </div>
-
-        <div class="progress-bar">
-            <div class="progress" style="width: 30%;"></div>
-        </div>
-
-    </div>
-
-</div>
-        
-    </div>
-<script src="script.js"></script>
+    <script src="script.js"></script>
 
 </body>
+
 </html>
