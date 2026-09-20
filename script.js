@@ -35,19 +35,62 @@ function addSkill() {
     newSkill.className = "skill-card";
 
     newSkill.innerHTML = `
-        <div class="skill-header">
-            <span>${skillName}</span>
-            <span>${skillProgress}%</span>
-        </div>
+    <div class="skill-header">
+        <span>${skillName}</span>
+        <span>${skillProgress}%</span>
+    </div>
 
-        <div class="progress-bar">
-            <div class="progress" style="width: ${skillProgress}%;"></div>
-        </div>
-    `;
+    <div class="progress-bar">
+        <div class="progress" style="width: ${skillProgress}%;"></div>
+    </div>
+
+    <div class="skill-actions">
+        <button onclick="editSkill(this)">✏ Edit</button>
+        <button onclick="deleteSkill(this)">🗑 Delete</button>
+    </div>
+`;
 
     skillsList.appendChild(newSkill);
 
     // Clear inputs
     skillNameInput.value = "";
     skillProgressInput.value = "";
+    
+}
+function deleteSkill(button) {
+    const skillCard = button.parentElement.parentElement;
+
+    const skillName = skillCard.querySelector(".skill-header span").textContent;
+
+    const confirmDelete = confirm("Delete " + skillName + "?");
+
+    if (confirmDelete) {
+        skillCard.remove();
+    }
+}
+
+
+function editSkill(button) {
+    const skillCard = button.parentElement.parentElement;
+
+    const skillNameElement = skillCard.querySelector(".skill-header span:first-child");
+    const progressElement = skillCard.querySelector(".skill-header span:nth-child(2)");
+    const progressBar = skillCard.querySelector(".progress");
+
+    const newProgress = prompt(
+        "Enter new progress (0-100):",
+        parseInt(progressElement.textContent)
+    );
+
+    if (newProgress === null) {
+        return;
+    }
+
+    if (newProgress === "" || newProgress < 0 || newProgress > 100) {
+        alert("Progress must be between 0 and 100.");
+        return;
+    }
+
+    progressElement.textContent = newProgress + "%";
+    progressBar.style.width = newProgress + "%";
 }
