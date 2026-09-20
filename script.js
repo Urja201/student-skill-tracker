@@ -1465,3 +1465,819 @@ loadDarkMode();
 displayProfile();
 
 displaySkills();
+
+// ================= PROJECT MANAGEMENT =================
+
+let projects = JSON.parse(localStorage.getItem("studentProjects")) || [];
+
+let editingProjectId = null;
+
+
+// ADD PROJECT
+
+function addProject() {
+
+    const name = document.getElementById("projectName").value.trim();
+    const tech = document.getElementById("projectTech").value.trim();
+    const status = document.getElementById("projectStatus").value;
+    const github = document.getElementById("projectGithub").value.trim();
+    const description = document.getElementById("projectDescription").value.trim();
+
+
+    // Check project name
+
+    if (name === "") {
+        alert("Please enter a project name.");
+        return;
+    }
+
+
+    // Prevent duplicate projects
+
+    const duplicate = projects.some(
+        project =>
+            project.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (duplicate) {
+        alert("This project already exists.");
+        return;
+    }
+
+
+    // Create project
+
+    const project = {
+        id: Date.now(),
+        name: name,
+        tech: tech || "Not specified",
+        status: status,
+        github: github,
+        description: description || "No description added."
+    };
+
+
+    projects.push(project);
+
+    saveProjects();
+
+    displayProjects();
+
+    clearProjectForm();
+}
+
+
+// SAVE PROJECTS
+
+function saveProjects() {
+
+    localStorage.setItem(
+        "studentProjects",
+        JSON.stringify(projects)
+    );
+
+}
+
+
+// DISPLAY PROJECTS
+
+function displayProjects() {
+
+    const container =
+        document.getElementById("projectsList");
+
+    const count =
+        document.getElementById("projectCount");
+
+
+    if (!container) return;
+
+
+    container.innerHTML = "";
+
+
+    count.textContent =
+        `${projects.length} ${projects.length === 1 ? "Project" : "Projects"}`;
+
+
+    if (projects.length === 0) {
+
+        container.innerHTML = `
+            <div class="empty-state">
+                <p>📁 No projects added yet.</p>
+                <span>Add your first project above.</span>
+            </div>
+        `;
+
+        return;
+    }
+
+
+    projects.forEach(project => {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "project-card";
+
+
+        card.innerHTML = `
+
+            <div class="project-card-top">
+
+                <div>
+                    <h3>
+                        ${escapeHTML(project.name)}
+                    </h3>
+
+                    <span class="project-status ${getStatusClass(project.status)}">
+                        ${escapeHTML(project.status)}
+                    </span>
+                </div>
+
+            </div>
+
+
+            <p class="project-description">
+                ${escapeHTML(project.description)}
+            </p>
+
+
+            <div class="project-tech">
+
+                <strong>🛠 Technology:</strong>
+
+                <span>
+                    ${escapeHTML(project.tech)}
+                </span>
+
+            </div>
+
+
+            <div class="project-actions">
+
+                ${
+                    project.github
+                    ?
+                    `<a
+                        href="${escapeHTML(project.github)}"
+                        target="_blank"
+                        class="project-link"
+                    >
+                        GitHub ↗
+                    </a>`
+                    :
+                    ""
+                }
+
+
+                <button
+                    class="edit-project-btn"
+                    onclick="openProjectEditModal(${project.id})"
+                >
+                    ✏ Edit
+                </button>
+
+
+                <button
+                    class="delete-project-btn"
+                    onclick="deleteProject(${project.id})"
+                >
+                    🗑 Delete
+                </button>
+
+            </div>
+
+        `;
+
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+// PROJECT STATUS CLASS
+
+function getStatusClass(status) {
+
+    if (status === "Completed") {
+        return "status-completed";
+    }
+
+    if (status === "In Progress") {
+        return "status-progress";
+    }
+
+    return "status-planning";
+
+}
+
+
+// CLEAR FORM
+
+function clearProjectForm() {
+
+    document.getElementById("projectName").value = "";
+
+    document.getElementById("projectTech").value = "";
+
+    document.getElementById("projectStatus").value =
+        "Planning";
+
+    document.getElementById("projectGithub").value = "";
+
+    document.getElementById("projectDescription").value = "";
+
+}
+
+
+// DELETE PROJECT
+
+function deleteProject(id) {
+
+    const confirmDelete =
+        confirm("Are you sure you want to delete this project?");
+
+    if (!confirmDelete) return;
+
+
+    projects =
+        projects.filter(project => project.id !== id);
+
+
+    saveProjects();
+
+    displayProjects();
+
+}
+
+
+// OPEN EDIT PROJECT
+
+function openProjectEditModal(id) {
+
+    const project =
+        projects.find(project => project.id === id);
+
+
+    if (!project) return;
+
+
+    editingProjectId = id;
+
+
+    document.getElementById("editProjectName").value =
+        project.name;
+
+    document.getElementById("editProjectTech").value =
+        project.tech;
+
+    document.getElementById("editProjectStatus").value =
+        project.status;
+
+    document.getElementById("editProjectGithub").value =
+        project.github;
+
+    document.getElementById("editProjectDescription").value =
+        project.description;
+
+
+    document.getElementById("projectEditModal")
+        .classList.add("active");
+
+}
+
+
+// CLOSE EDIT PROJECT
+
+function closeProjectEditModal() {
+
+    document.getElementById("projectEditModal")
+        .classList.remove("active");
+
+    editingProjectId = null;
+
+}
+
+
+// SAVE EDITED PROJECT
+
+function saveEditedProject() {
+
+    if (editingProjectId === null) return;
+
+
+    const name =
+        document.getElementById("editProjectName")
+            .value.trim();
+
+    const tech =
+        document.getElementById("editProjectTech")
+            .value.trim();
+
+    const status =
+        document.getElementById("editProjectStatus")
+            .value;
+
+    const github =
+        document.getElementById("editProjectGithub")
+            .value.trim();
+
+    const description =
+        document.getElementById("editProjectDescription")
+            .value.trim();
+
+
+    if (name === "") {
+
+        alert("Project name cannot be empty.");
+
+        return;
+    }
+
+
+    // Check duplicate name
+
+    const duplicate = projects.some(
+        project =>
+            project.id !== editingProjectId &&
+            project.name.toLowerCase() === name.toLowerCase()
+    );
+
+
+    if (duplicate) {
+
+        alert("Another project with this name already exists.");
+
+        return;
+    }
+
+
+    const project =
+        projects.find(
+            project => project.id === editingProjectId
+        );
+
+
+    if (!project) return;
+
+
+    project.name = name;
+
+    project.tech =
+        tech || "Not specified";
+
+    project.status =
+        status;
+
+    project.github =
+        github;
+
+    project.description =
+        description || "No description added.";
+
+
+    saveProjects();
+
+    displayProjects();
+
+    closeProjectEditModal();
+
+}
+
+
+// LOAD PROJECTS
+
+displayProjects();
+
+// ================= LEARNING GOALS =================
+
+let goals =
+    JSON.parse(localStorage.getItem("studentGoals")) || [];
+
+let editingGoalId = null;
+
+
+// ADD GOAL
+
+function addGoal() {
+
+    const name =
+        document.getElementById("goalName").value.trim();
+
+    const deadline =
+        document.getElementById("goalDeadline").value;
+
+    const progress =
+        Number(document.getElementById("goalProgress").value);
+
+    const status =
+        document.getElementById("goalStatus").value;
+
+
+    // Check goal name
+
+    if (name === "") {
+
+        alert("Please enter a learning goal.");
+
+        return;
+    }
+
+
+    // Prevent duplicate goals
+
+    const duplicate = goals.some(
+        goal =>
+            goal.name.toLowerCase() === name.toLowerCase()
+    );
+
+
+    if (duplicate) {
+
+        alert("This learning goal already exists.");
+
+        return;
+    }
+
+
+    // Validate progress
+
+    if (progress < 0 || progress > 100) {
+
+        alert("Progress must be between 0 and 100.");
+
+        return;
+    }
+
+
+    const goal = {
+
+        id: Date.now(),
+
+        name: name,
+
+        deadline: deadline,
+
+        progress: progress,
+
+        status: status
+
+    };
+
+
+    goals.push(goal);
+
+    saveGoals();
+
+    displayGoals();
+
+    clearGoalForm();
+
+}
+
+
+// SAVE GOALS
+
+function saveGoals() {
+
+    localStorage.setItem(
+        "studentGoals",
+        JSON.stringify(goals)
+    );
+
+}
+
+
+// DISPLAY GOALS
+
+function displayGoals() {
+
+    const container =
+        document.getElementById("goalsList");
+
+    const count =
+        document.getElementById("goalCount");
+
+
+    if (!container) return;
+
+
+    container.innerHTML = "";
+
+
+    count.textContent =
+        `${goals.length} ${goals.length === 1 ? "Goal" : "Goals"}`;
+
+
+    if (goals.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="empty-state">
+
+                <p>🎯 No learning goals yet.</p>
+
+                <span>
+                    Add your first goal and start tracking it.
+                </span>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    goals.forEach(goal => {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "goal-card";
+
+
+        card.innerHTML = `
+
+            <div class="goal-card-top">
+
+                <div>
+
+                    <h3>
+                        ${escapeHTML(goal.name)}
+                    </h3>
+
+                    <span class="goal-status ${getGoalStatusClass(goal.status)}">
+                        ${escapeHTML(goal.status)}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="goal-progress-info">
+
+                <span>
+                    Progress
+                </span>
+
+                <strong>
+                    ${goal.progress}%
+                </strong>
+
+            </div>
+
+
+            <div class="goal-progress-bar">
+
+                <div
+                    style="width: ${goal.progress}%"
+                ></div>
+
+            </div>
+
+
+            <div class="goal-details">
+
+                <span>
+                    📅
+                    ${
+                        goal.deadline
+                        ? formatGoalDate(goal.deadline)
+                        : "No deadline"
+                    }
+                </span>
+
+            </div>
+
+
+            <div class="goal-actions">
+
+                <button
+                    class="edit-goal-btn"
+                    onclick="editGoal(${goal.id})"
+                >
+                    ✏ Edit
+                </button>
+
+
+                <button
+                    class="delete-goal-btn"
+                    onclick="deleteGoal(${goal.id})"
+                >
+                    🗑 Delete
+                </button>
+
+            </div>
+
+        `;
+
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+// STATUS CLASS
+
+function getGoalStatusClass(status) {
+
+    if (status === "Completed") {
+
+        return "goal-completed";
+
+    }
+
+    if (status === "In Progress") {
+
+        return "goal-progress";
+
+    }
+
+    return "goal-not-started";
+
+}
+
+
+// FORMAT DATE
+
+function formatGoalDate(date) {
+
+    const parts = date.split("-");
+
+    if (parts.length !== 3) return date;
+
+
+    return `${parts[2]}/${parts[1]}/${parts[0]}`;
+
+}
+
+
+// CLEAR FORM
+
+function clearGoalForm() {
+
+    document.getElementById("goalName").value = "";
+
+    document.getElementById("goalDeadline").value = "";
+
+    document.getElementById("goalProgress").value = 0;
+
+    document.getElementById("goalStatus").value =
+        "Not Started";
+
+}
+
+
+// DELETE GOAL
+
+function deleteGoal(id) {
+
+    const confirmDelete =
+        confirm("Are you sure you want to delete this goal?");
+
+
+    if (!confirmDelete) return;
+
+
+    goals =
+        goals.filter(goal => goal.id !== id);
+
+
+    saveGoals();
+
+    displayGoals();
+
+}
+
+
+// EDIT GOAL
+
+function editGoal(id) {
+
+    const goal =
+        goals.find(goal => goal.id === id);
+
+
+    if (!goal) return;
+
+
+    const newName =
+        prompt(
+            "Enter goal name:",
+            goal.name
+        );
+
+
+    if (newName === null) return;
+
+
+    const trimmedName =
+        newName.trim();
+
+
+    if (trimmedName === "") {
+
+        alert("Goal name cannot be empty.");
+
+        return;
+    }
+
+
+    // Duplicate check
+
+    const duplicate = goals.some(
+        item =>
+            item.id !== id &&
+            item.name.toLowerCase() ===
+            trimmedName.toLowerCase()
+    );
+
+
+    if (duplicate) {
+
+        alert("Another goal with this name already exists.");
+
+        return;
+    }
+
+
+    const newProgress =
+        prompt(
+            "Enter progress (0-100):",
+            goal.progress
+        );
+
+
+    if (newProgress === null) return;
+
+
+    const progress =
+        Number(newProgress);
+
+
+    if (
+        Number.isNaN(progress) ||
+        progress < 0 ||
+        progress > 100
+    ) {
+
+        alert("Progress must be between 0 and 100.");
+
+        return;
+    }
+
+
+    const newStatus =
+        prompt(
+            "Enter status: Not Started / In Progress / Completed",
+            goal.status
+        );
+
+
+    if (newStatus === null) return;
+
+
+    const validStatuses = [
+        "Not Started",
+        "In Progress",
+        "Completed"
+    ];
+
+
+    if (!validStatuses.includes(newStatus)) {
+
+        alert(
+            "Please enter exactly: Not Started, In Progress, or Completed."
+        );
+
+        return;
+    }
+
+
+    goal.name =
+        trimmedName;
+
+    goal.progress =
+        progress;
+
+    goal.status =
+        newStatus;
+
+
+    saveGoals();
+
+    displayGoals();
+
+}
+
+
+// LOAD GOALS
+
+displayGoals();

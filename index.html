@@ -517,7 +517,291 @@
         </section>
 
 
+<!-- ================= PROJECTS ================= -->
 
+<section class="projects-section">
+
+    <div class="section-heading">
+
+        <div>
+            <p class="section-label">
+                MY WORK
+            </p>
+
+            <h2>
+                Projects
+            </h2>
+        </div>
+
+        <span id="projectCount">
+            0 Projects
+        </span>
+
+    </div>
+
+
+    <!-- ADD PROJECT -->
+
+    <div class="add-section project-form">
+
+        <div class="section-heading">
+
+            <div>
+                <p class="section-label">
+                    BUILD YOUR PORTFOLIO
+                </p>
+
+                <h2>
+                    Add a Project
+                </h2>
+            </div>
+
+        </div>
+
+
+        <div class="form-grid">
+
+            <div class="input-group">
+
+                <label for="projectName">
+                    Project Name
+                </label>
+
+                <input
+                    type="text"
+                    id="projectName"
+                    placeholder="e.g. Student Skill Tracker"
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label for="projectTech">
+                    Technology Used
+                </label>
+
+                <input
+                    type="text"
+                    id="projectTech"
+                    placeholder="e.g. HTML, CSS, JavaScript"
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label for="projectStatus">
+                    Project Status
+                </label>
+
+                <select id="projectStatus">
+
+                    <option value="Planning">
+                        Planning
+                    </option>
+
+                    <option value="In Progress">
+                        In Progress
+                    </option>
+
+                    <option value="Completed">
+                        Completed
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label for="projectGithub">
+                    GitHub Link
+                </label>
+
+                <input
+                    type="url"
+                    id="projectGithub"
+                    placeholder="https://github.com/username/project"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="input-group">
+
+            <label for="projectDescription">
+                Project Description
+            </label>
+
+            <textarea
+                id="projectDescription"
+                rows="3"
+                placeholder="Briefly describe what your project does..."
+            ></textarea>
+
+        </div>
+
+
+        <button
+            class="add-button"
+            onclick="addProject()"
+        >
+            + Add Project
+        </button>
+
+    </div>
+
+
+    <!-- PROJECT LIST -->
+
+    <div
+        id="projectsList"
+        class="projects-grid"
+    ></div>
+
+</section>
+<!-- ================= LEARNING GOALS ================= -->
+
+<section class="goals-section">
+
+    <div class="section-heading">
+
+        <div>
+            <p class="section-label">
+                KEEP LEARNING
+            </p>
+
+            <h2>
+                Learning Goals
+            </h2>
+        </div>
+
+        <span id="goalCount">
+            0 Goals
+        </span>
+
+    </div>
+
+
+    <!-- ADD GOAL -->
+
+    <div class="add-section goal-form">
+
+        <div class="section-heading">
+
+            <div>
+                <p class="section-label">
+                    SET YOUR NEXT TARGET
+                </p>
+
+                <h2>
+                    Add a Learning Goal
+                </h2>
+            </div>
+
+        </div>
+
+
+        <div class="form-grid">
+
+            <div class="input-group">
+
+                <label for="goalName">
+                    Goal
+                </label>
+
+                <input
+                    type="text"
+                    id="goalName"
+                    placeholder="e.g. Learn JavaScript"
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label for="goalDeadline">
+                    Deadline
+                </label>
+
+                <input
+                    type="date"
+                    id="goalDeadline"
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label for="goalProgress">
+                    Progress
+                </label>
+
+                <input
+                    type="number"
+                    id="goalProgress"
+                    placeholder="0 - 100"
+                    min="0"
+                    max="100"
+                    value="0"
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label for="goalStatus">
+                    Status
+                </label>
+
+                <select id="goalStatus">
+
+                    <option value="Not Started">
+                        Not Started
+                    </option>
+
+                    <option value="In Progress">
+                        In Progress
+                    </option>
+
+                    <option value="Completed">
+                        Completed
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="add-button"
+            onclick="addGoal()"
+        >
+            + Add Goal
+        </button>
+
+    </div>
+
+
+    <!-- GOALS LIST -->
+
+    <div
+        id="goalsList"
+        class="goals-grid"
+    ></div>
+
+</section>
         <!-- ================= SKILLS ================= -->
 
         <section>
