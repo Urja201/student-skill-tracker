@@ -18,75 +18,99 @@
         <p class="subtitle">
             Track your Computer Engineering skills and learning progress.
         </p>
+<h2>My Skills</h2>
 
-        <h2>My Skills</h2>
+<div class="add-skill">
 
-        <div class="skill-card">
+    <input type="text" id="skillName" placeholder="Enter skill name">
 
-            <div class="skill-header">
-                <span>C Programming</span>
-                <span>80%</span>
-            </div>
+    <input type="number" id="skillProgress" placeholder="Progress %" min="0" max="100">
 
-            <div class="progress-bar">
-                <div class="progress" style="width: 80%;"></div>
-            </div>
+    <button onclick="addSkill()">+ Add Skill</button>
 
+</div>
+
+
+<div id="skillsList">
+
+    <!-- C Programming -->
+    <div class="skill-card">
+
+        <div class="skill-header">
+            <span>C Programming</span>
+            <span>80%</span>
         </div>
 
-        <div class="skill-card">
-
-            <div class="skill-header">
-                <span>C++</span>
-                <span>70%</span>
-            </div>
-
-            <div class="progress-bar">
-                <div class="progress" style="width: 70%;"></div>
-            </div>
-
-        </div>
-
-        <div class="skill-card">
-
-            <div class="skill-header">
-                <span>Python</span>
-                <span>50%</span>
-            </div>
-
-            <div class="progress-bar">
-                <div class="progress" style="width: 50%;"></div>
-            </div>
-
-        </div>
-
-        <div class="skill-card">
-
-            <div class="skill-header">
-                <span>HTML & CSS</span>
-                <span>80%</span>
-            </div>
-
-            <div class="progress-bar">
-                <div class="progress" style="width: 80%;"></div>
-            </div>
-
-        </div>
-
-        <div class="skill-card">
-
-            <div class="skill-header">
-                <span>Git & GitHub</span>
-                <span>30%</span>
-            </div>
-
-            <div class="progress-bar">
-                <div class="progress" style="width: 30%;"></div>
-            </div>
-
+        <div class="progress-bar">
+            <div class="progress" style="width: 80%;"></div>
         </div>
 
     </div>
+
+
+    <!-- C++ -->
+    <div class="skill-card">
+
+        <div class="skill-header">
+            <span>C++</span>
+            <span>70%</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress" style="width: 70%;"></div>
+        </div>
+
+    </div>
+
+
+    <!-- Python -->
+    <div class="skill-card">
+
+        <div class="skill-header">
+            <span>Python</span>
+            <span>50%</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress" style="width: 50%;"></div>
+        </div>
+
+    </div>
+
+
+    <!-- HTML & CSS -->
+    <div class="skill-card">
+
+        <div class="skill-header">
+            <span>HTML & CSS</span>
+            <span>80%</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress" style="width: 80%;"></div>
+        </div>
+
+    </div>
+
+
+    <!-- Git & GitHub -->
+    <div class="skill-card">
+
+        <div class="skill-header">
+            <span>Git & GitHub</span>
+            <span>30%</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress" style="width: 30%;"></div>
+        </div>
+
+    </div>
+
+</div>
+        
+    </div>
+<script src="script.js"></script>
 
 </body>
 </html>
